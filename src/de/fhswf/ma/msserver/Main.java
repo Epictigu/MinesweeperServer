@@ -51,8 +51,9 @@ public class Main {
 	private static List<String> readLines(Socket dSocket) throws IOException {
 		List<String> lineList = new ArrayList<String>();
 		BufferedReader lineReader = new BufferedReader(new InputStreamReader(dSocket.getInputStream()));
+		lineList.add(lineReader.readLine());
 		while(lineReader.ready()) {
-			lineReader.readLine();
+			lineList.add(lineReader.readLine());
 		}
 		
 		return lineList;
@@ -69,16 +70,15 @@ public class Main {
 		
 		if(lineList.get(0).equals("highscore_info")) {
 			sendHighscore(dSocket);
-		} else if(lineList.get(0).equals("highscore_new")) {
+		} else if(lineList.get(0).equals("highscore_add")) {
 			try {
 				Difficulty difficulty = Difficulty.valueOf(lineList.get(1));
 				if(difficulty == null) {
 					System.out.println("Wrong data. Cancel Workthrough.");
 					return;
 				}
-				DataManager.getInstance().addHighscore(new Highscore(lineList.get(3), Integer.parseInt(lineList.get(1)), Integer.parseInt(lineList.get(2))), difficulty);
+				DataManager.getInstance().addHighscore(new Highscore(lineList.get(4), Integer.parseInt(lineList.get(2)), Integer.parseInt(lineList.get(3))), difficulty);
 				System.out.println("Highscore-Daten verarbeitet.");
-				sendHighscore(dSocket);
 			} catch(NumberFormatException e) {
 				System.out.println("Wrong data. Cancel Workthrough.");
 			}
@@ -95,6 +95,10 @@ public class Main {
 			sWriter.println("difficulty: " + difficulty);
 			Highscore[] highscores = DataManager.getInstance().getHighscoreByDifficulty(difficulty);
 			for(Highscore highscore : highscores) {
+				System.out.println(highscore);
+				if(highscore == null)
+					break;
+				System.out.println(highscore.getName());
 				sWriter.println(highscore.getPoints());
 				sWriter.println(highscore.getTime());
 				sWriter.println(highscore.getName());

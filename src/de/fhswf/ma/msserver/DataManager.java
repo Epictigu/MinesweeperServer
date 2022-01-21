@@ -40,6 +40,9 @@ public class DataManager {
 			}
 		}
 		highscoreByDifficulty.put(difficulty, highscoreA);
+		for(Highscore hc : highscoreA) {
+			System.out.println(hc);
+		}
 	}
 	
 	
