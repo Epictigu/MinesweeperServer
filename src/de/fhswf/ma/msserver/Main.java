@@ -22,6 +22,7 @@ public class Main {
 	}
 	
 	private static void setup() {
+		DataManager.getInstance().loadData();
 		try {
 			sSocket = new ServerSocket(SERVER_PORT);
 		} catch (IOException e) {
@@ -37,7 +38,16 @@ public class Main {
 					
 					try {
 						Socket dSocket = sSocket.accept();
-						dataWork(dSocket);
+						new Thread(){
+							public void run() {
+								try {
+									dataWork(dSocket);
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							}
+						}.start();
+						
 					} catch(Exception e) {
 						System.out.println("Cancelling because of error:");
 						e.printStackTrace();
@@ -95,10 +105,8 @@ public class Main {
 			sWriter.println("difficulty: " + difficulty);
 			Highscore[] highscores = DataManager.getInstance().getHighscoreByDifficulty(difficulty);
 			for(Highscore highscore : highscores) {
-				System.out.println(highscore);
 				if(highscore == null)
 					break;
-				System.out.println(highscore.getName());
 				sWriter.println(highscore.getPoints());
 				sWriter.println(highscore.getTime());
 				sWriter.println(highscore.getName());
