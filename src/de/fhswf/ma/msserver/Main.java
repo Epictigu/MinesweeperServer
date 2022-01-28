@@ -10,6 +10,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ *
+ * @author Dominik Müller, Timo Röder
+ * @version 1.0
+ */
 public class Main {
 	
 	private final static int SERVER_PORT = 9956;

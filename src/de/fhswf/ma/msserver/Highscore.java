@@ -1,5 +1,11 @@
 package de.fhswf.ma.msserver;
 
+/**
+ * 
+ *
+ * @author Dominik Müller
+ * @version 1.0
+ */
 public class Highscore {
 
 	private String name;

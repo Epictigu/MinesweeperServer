@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * TODO Add comment here
+ *
+ * @author Dominik Müller, Timo Röder
+ * @version 1.0
+ */
 public class DataManager {
 
 	private static DataManager instance;
