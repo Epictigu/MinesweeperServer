@@ -43,7 +43,7 @@ public class Main {
 								try {
 									dataWork(dSocket);
 								} catch (IOException e) {
-									e.printStackTrace();
+									System.out.println("Cancelling because of error: " + e.getMessage());
 								}
 							}
 						}.start();
@@ -87,7 +87,12 @@ public class Main {
 					System.out.println("Wrong data. Cancel Workthrough.");
 					return;
 				}
-				DataManager.getInstance().addHighscore(new Highscore(lineList.get(4), Integer.parseInt(lineList.get(2)), Integer.parseInt(lineList.get(3))), difficulty);
+				String name = lineList.get(4);
+				if(name.length() > 16)
+					name = name.substring(0, 16);
+				if(name.length() == 0)
+					return;
+				DataManager.getInstance().addHighscore(new Highscore(name, Integer.parseInt(lineList.get(2)), Integer.parseInt(lineList.get(3))), difficulty);
 				System.out.println("Highscore-Daten verarbeitet.");
 			} catch(NumberFormatException e) {
 				System.out.println("Wrong data. Cancel Workthrough.");
